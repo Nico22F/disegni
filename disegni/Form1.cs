@@ -51,8 +51,10 @@ namespace disegni
                 g.DrawEllipse(cerchio, rettangolo_cerchio);
             }
         }
-       
-        /*public void DisegnaLinea(object sender, PaintEventArgs e)
+
+        /*
+         * 
+         * public void DisegnaLinea(object sender, PaintEventArgs e)
         {
             if (disegnaoggetti)
             {
@@ -78,8 +80,8 @@ namespace disegni
             for (int i = 0; i < n; i++)
             {
                 pos = i;
-                this.Paint += new PaintEventHandler(DisegnaCerchio);
 
+                this.Paint += new PaintEventHandler(DisegnaCerchio);
             }
 
             // disegno le linee
