@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,21 +40,7 @@ namespace disegni
 
         Struct[] array = new Struct[24];
 
-        public void DisegnaCerchio(object sender, PaintEventArgs e)
-        {
-            if (disegnaoggetti)
-            {
-                
-                Graphics g = this.panel1.CreateGraphics();
-                Pen cerchio = new Pen(Color.Black, 2);
-                Rectangle rettangolo_cerchio = new Rectangle(array[pos].x, array[pos].y, 50, 50);
-
-                g.DrawEllipse(cerchio, rettangolo_cerchio);
-            }
-        }
-
         /*
-         * 
          * public void DisegnaLinea(object sender, PaintEventArgs e)
         {
             if (disegnaoggetti)
@@ -75,16 +62,17 @@ namespace disegni
 
         public void DisegnaGrafo(int n)
         {
-            // disegno i cerchi
+            Random random = new Random();
 
             for (int i = 0; i < n; i++)
             {
-                pos = i;
-
-                this.Paint += new PaintEventHandler(DisegnaCerchio);
+                int x = random.Next(0, 961);
+                int y = random.Next(0, 390);
+                Graphics g = this.panel1.CreateGraphics();
+                Pen cerchio = new Pen(Color.Black, 2);
+                Rectangle rettangolo_cerchio = new Rectangle(x, y, 50, 50);
+                g.DrawEllipse(cerchio, rettangolo_cerchio);
             }
-
-            // disegno le linee
         }
 
         public void RiempiLettere(int n)
@@ -97,13 +85,33 @@ namespace disegni
 
                 array[i].nome = ((char)ascii_n).ToString();
                 ascii_n++;
+
+                // controllo e aggiunta posizioni
+
+                bool uscita = false;
+
+                while (uscita == false)
+                {
+                    uscita = true;
+
+                    array[i].x = Randomizzare();
+                    array[i].y = (array[i].x + 30);
+
+                    for (int j = 0; i < pos; j++)
+                    {
+                        if(i != j)
+                        {
+                            if (array[i].x == array[j].x)
+                            {
+                                uscita = false;
+                            }
+                        }
+                    }
+                }
                 pos++;
-
-                // posizioni
-
-                array[i].x = Randomizzare();
-                array[i].y = (array[i].x + 20);
             }
+
+            
         }
 
         // numeri casuali
@@ -134,5 +142,6 @@ namespace disegni
             this.Invalidate();
 
         }
+
     }
 }
